@@ -1,25 +1,21 @@
 # 1. Use the Kali Linux rolling base image
 FROM kalilinux/kali-rolling
 
-WORKDIR /app
+WORKDIR /
+
+
+# Add Go binaries to the PATH
+ENV PATH="/root/go/bin:${PATH}"
+
 
 # 3. Update package list and install Golang
-RUN apt-get update && apt-get install -y golang ca-certificates
+RUN apt-get update && apt-get install -y golang ca-certificates nmap
 
-# # 4. Install assetfinder
-# RUN go get -u github.com/tomnomnom/assetfinder
-
-# 5. Install httprobe (latest version)
-RUN go install github.com/tomnomnom/httprobe@latest
-
-# # 6. Install subjack
-# RUN go get github.com/haccer/subjack
-
-# 7. Install waybackurls (latest version)
-RUN go install github.com/tomnomnom/waybackurls@latest
-
-# 8. Install OWASP Amass (master version)
-RUN go install -v github.com/owasp-amass/amass/v4/...@master
+RUN go install github.com/tomnomnom/assetfinder@latest \
+    && go install github.com/tomnomnom/httprobe@latest \
+    && go install github.com/haccer/subjack@latest \
+    && go install github.com/tomnomnom/waybackurls@latest \
+    && go install -v github.com/owasp-amass/amass/v4/...@master
 
 # 9. Copy recon.sh to /app directory
 COPY recon.sh /
