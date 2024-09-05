@@ -15,8 +15,8 @@ RUN go install github.com/tomnomnom/assetfinder@latest \
     && go install github.com/tomnomnom/httprobe@latest \
     && go install github.com/haccer/subjack@latest \
     && go install github.com/tomnomnom/waybackurls@latest \
-    && go install -v github.com/owasp-amass/amass/v4/...@master
-
+    && go install -v github.com/owasp-amass/amass/v4/...@master \
+    && go install github.com/sensepost/gowitness@latest
 # # 9. Copy recon.sh to /app directory
 # COPY recon.sh /app
 

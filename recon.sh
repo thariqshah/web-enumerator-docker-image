@@ -5,9 +5,9 @@ fi
 if [ ! -d "$url/recon" ];then
 	mkdir $url/recon
 fi
-#    if [ ! -d '$url/recon/eyewitness' ];then
-#        mkdir $url/recon/eyewitness
-#    fi
+   if [ ! -d '$url/recon/eyewitness' ];then
+       mkdir $url/recon/eyewitness
+   fi
 if [ ! -d "$url/recon/scans" ];then
 	mkdir $url/recon/scans
 fi
@@ -38,10 +38,10 @@ assetfinder $url >> $url/recon/assets.txt
 cat $url/recon/assets.txt | grep $1 >> $url/recon/final.txt
 rm $url/recon/assets.txt
  
-#echo "[+] Double checking for subdomains with amass..."
-#amass enum -d $url >> $url/recon/f.txt
-#sort -u $url/recon/f.txt >> $url/recon/final.txt
-#rm $url/recon/f.txt
+echo "[+] Double checking for subdomains with amass..."
+amass enum -d $url >> $url/recon/f.txt
+sort -u $url/recon/f.txt >> $url/recon/final.txt
+rm $url/recon/f.txt
  
 echo "[+] Probing for alive domains..."
 cat $url/recon/final.txt | sort -u | httprobe -s -p https:443 | sed 's/https\?:\/\///' | tr -d ':443' >> $url/recon/httprobe/a.txt
@@ -97,5 +97,5 @@ rm $url/recon/wayback/extensions/jsp1.txt
 rm $url/recon/wayback/extensions/json1.txt
 rm $url/recon/wayback/extensions/php1.txt
 rm $url/recon/wayback/extensions/aspx1.txt
-#echo "[+] Running eyewitness against all compiled domains..."
-#python3 EyeWitness/EyeWitness.py --web -f $url/recon/httprobe/alive.txt -d $url/recon/eyewitness --resolve
+echo "[+] Running eyewitness against all compiled domains..."
+python3 EyeWitness/EyeWitness.py --web -f $url/recon/httprobe/alive.txt -d $url/recon/eyewitness --resolve
